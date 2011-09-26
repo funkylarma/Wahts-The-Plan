@@ -1,0 +1,9 @@
+<h1>Home Page</h1>
+
+<% if @events.count != 0 %>
+	<ul>
+	<% @events.each do | event | %>
+		<li><%= event.title %></li>
+	<% end %>
+	</ul>
+<% end %>

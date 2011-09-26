@@ -1,0 +1,9 @@
+<% if @promoters.count != 0 %>
+	<ul>
+	<% @promoters.each do | promoter | %>
+		<li><%= promoter.name %></li>
+	<% end %>
+	</ul>
+<% end %>
+
+<a href="/promoter/create">Create new</a>

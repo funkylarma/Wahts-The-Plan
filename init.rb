@@ -10,3 +10,17 @@ if ENV['MONGOLAB_URI']
 else
   MongoMapper.database = "whats_the_plan"
 end
+
+#Setup site requirements
+use Rack::Session::Cookie, :secret => 'Stuck for nothing to do'
+use Rack::Flash
+
+#Require the models
+%w[promoter event].each do |model|
+  require File.join(File.dirname(__FILE__), "models", model)
+end
+
+#Require controllers
+%w[app promoter event].each do |controller|
+  require File.join(File.dirname(__FILE__), "controllers", controller + "_controller")
+end
