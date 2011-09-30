@@ -22,6 +22,11 @@ CATEGORIES = {:concert => "Concert", :festival => "Festival", :live_music => "Li
 #Require helpers
 require_relative 'helpers'
 
+#Require libaries
+%w[content_for].each do |lib|
+  require File.join(File.dirname(__FILE__), "lib", lib)
+end
+
 #Require the models
 %w[promoter event].each do |model|
   require File.join(File.dirname(__FILE__), "models", model)

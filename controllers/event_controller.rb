@@ -21,3 +21,11 @@ post '/event/create' do
     redirect '/event/create'
   end
 end
+
+get '/event/:id' do
+  @event = Event.find(params[:id])
+  @promoter = Promoter.find(@event.promoterId)
+  @pageTitle = @promoter.name
+  @subTitle = @event.title
+  erb :'/events/detail'
+end

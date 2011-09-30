@@ -75,7 +75,7 @@
 		    		<%= yield %>
 		    	</div><!-- .span10 -->
 		    	<div class="span4">
-		    		<h3>Secondary content</h3>
+		    	    <% yield_content :sidebar %>
 		    	</div><!-- .span4 -->
 		    </div><!-- .row -->
 		    
@@ -89,6 +89,7 @@
   
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+<% yield_content :js_footer %>
     
 </body>
 </html>

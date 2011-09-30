@@ -1,9 +1,16 @@
-<h2>Local Events</h2>
+<h2>Recently added events</h2>
 
 <% if @events.count != 0 %>
 	<ul>
 	<% @events.each do | event | %>
-		<li><%= event.title %></li>
+		<li><a href="/event/<%= event.id %>"><%= event.title %></a></li>
 	<% end %>
 	</ul>
+<% end %>
+
+<% content_for :sidebar do %>
+    <h3>Site Sponsors</h3>
+    <img src="/img/sponsor.png" alt="Sponsor the site">
+    <img src="/img/sponsor.png" alt="Sponsor the site">
+    <img src="/img/sponsor.png" alt="Sponsor the site">
 <% end %>

@@ -1,0 +1,18 @@
+<div id="map">
+    <!-- Create map here -->
+</div>
+
+<% content_for :sidebar do %>
+    <h3>Event Details</h3>
+    <p>Insert some details about <%= @promoter.name %> and the <%= @event.title %> in here</p>
+<% end %>
+
+<% content_for :js_footer do %>
+    <script src="/js/init.js"></script>
+    <script>
+        $(document).ready(function() {
+            var map = createMap(<%= @event.location[1] %>, <%= @event.location[0] %>, 16, "map");
+            var marker = dropPin(<%= @event.location[1] %>, <%= @event.location[0] %>, map, false); 
+        });
+    </script>
+<% end %>
