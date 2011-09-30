@@ -15,6 +15,13 @@ end
 use Rack::Session::Cookie, :secret => 'Stuck for nothing to do'
 use Rack::Flash
 
+#Site constants
+EMAIL_REGEXP = /(\A(\s*)\Z)|(\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z)/i
+CATEGORIES = {:concert => "Concert", :festival => "Festival", :live_music => "Live Music", :night_club => "Night Club", :pub => "Pub" }
+
+#Require helpers
+require_relative 'helpers'
+
 #Require the models
 %w[promoter event].each do |model|
   require File.join(File.dirname(__FILE__), "models", model)

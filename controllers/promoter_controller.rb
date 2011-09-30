@@ -18,3 +18,14 @@ post '/promoter/create' do
     redirect '/'
   end
 end
+
+post '/promoter/login' do
+  if promoter = Promoter.authenticate(params[:email], params[:password])
+    session[:promoter] = promoter.id
+    flash[:confirm] = "Login successful."
+    redirect '/'
+  else
+    flash[:error] = "Could not log you in."
+    redirect '/login'
+  end
+end

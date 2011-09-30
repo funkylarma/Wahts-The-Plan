@@ -5,7 +5,7 @@ class Promoter
   
   key :name, String, :required => true
   key :address, String, :required => true
-  key :email, String
+  key :email, String, :required => true, :unique => true, :format => EMAIL_REGEXP
   key :url, String
   key :tel, String
   key :hashed_password, String

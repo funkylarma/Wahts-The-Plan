@@ -1,5 +1,3 @@
-<h2>Local Events</h2>
-
 <% if @events.count != 0 %>
 	<ul>
 	<% @events.each do | event | %>
@@ -7,3 +5,5 @@
 	<% end %>
 	</ul>
 <% end %>
+
+<a href="/event/create">Create new</a>
