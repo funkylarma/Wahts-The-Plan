@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Title -->
+    <title><%= @title %></title>
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="http://twitter.github.com/bootstrap//1.3.0/bootstrap.min.css">
@@ -34,7 +35,7 @@
 					<li><a href="/promoter">Visit Promoters</a></li>
 				</ul>
 				<% if logged_in? %>
-					<p class="pull-right">Logged in as <%= current_user.email %></p>
+					<p class="pull-right">Logged in as <a href="/promoter/profile" title="Your profile"><%= current_user.email %></a></p>
 				<% else %>
 					<form action="/promoter/login" method="post" class="pull-right">
 						<input type="text" name="email" id="email" placeholder="Email" class="input-small">

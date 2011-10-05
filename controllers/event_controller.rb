@@ -1,16 +1,20 @@
 
 get '/event' do
+  @title = "Find events"
+  @pageTitle = "Find events"
   @events = Event.all
   erb :'/events/index'
 end
 
 get '/event/create' do
-  #login_required
+  login_required
+  @pageTitle = promoter_name
+  @subTitle = "Create new event"
   erb :'/events/create'
 end
 
 post '/event/create' do
-  #login_required
+  login_required
   @event = Event.create(params[:event])
   @event.promoterId = current_user.id
   location = geocode(params[:address])
@@ -25,7 +29,7 @@ end
 get '/event/:id' do
   @event = Event.find(params[:id])
   @promoter = Promoter.find(@event.promoterId)
-  @pageTitle = @promoter.name
-  @subTitle = @event.title
+  @pageTitle = @event.title
+  @subTitle = "@ #{@promoter.name}"
   erb :'/events/detail'
 end

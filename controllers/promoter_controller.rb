@@ -1,5 +1,7 @@
 
 get '/promoter' do
+  @title = "Find event promoters"
+  @pageTitle = "Find event promoters"
   @promoters = Promoter.all
   erb :'/promoter/index'
 end
@@ -28,4 +30,19 @@ post '/promoter/login' do
     flash[:error] = "Could not log you in."
     redirect '/login'
   end
+end
+
+get '/promoter/profile' do
+  login_required
+  @title = "Your profile"
+  @pageTitle = promoter_name
+  @subTitle = "Your profile"
+  erb :'/promoter/profile'
+end
+
+get '/promoter/:id' do
+  @promoter = Promoter.find(params[:id])
+  @title = @promoter.name
+  @pageTitle = @promoter.name
+  erb :'/promoter/detail'
 end

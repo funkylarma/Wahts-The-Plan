@@ -29,7 +29,7 @@ helpers do
     Geokit::Geocoders::GoogleGeocoder.reverse_geocode([lat, lon]).full_address
   end
   
-  #User Helper methods
+  #Promoter Helper methods
   def login_required
     if session[:promoter]
       return true
@@ -51,6 +51,12 @@ helpers do
       return true
     else
       return false
+    end
+  end
+  
+  def promoter_name
+    if session[:promoter]
+      Promoter.find(session[:promoter]).name
     end
   end
   
