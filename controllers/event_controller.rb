@@ -5,12 +5,12 @@ get '/event' do
 end
 
 get '/event/create' do
-  login_required
+  #login_required
   erb :'/events/create'
 end
 
 post '/event/create' do
-  login_required
+  #login_required
   @event = Event.create(params[:event])
   @event.promoterId = current_user.id
   location = geocode(params[:address])
