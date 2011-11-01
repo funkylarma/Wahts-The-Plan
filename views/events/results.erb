@@ -1,101 +1,59 @@
-
-<div id="leftsearch">
-    <form id="Search Clubs">
-        <fieldset class="PostCode">
-            <p class="locationPostCode">
-                <label class="field" title="This is a required field"><span class="asterisk">*</span> Postcode: <em>(required)</em></label>
-                <span class="editMode " id="postCodeWrapper">
-                    <input id="postcode"value="@ViewData["PostCode"].ToString()" name="postcode" class="postcode signInTrigger postcodeTopMargin" type="text" spellcheck="false">
-                </span>
-            </p>
-            <p class="distance">
-                <label for="radius">Distance</label>
-                <select name="radius" id="radius" class="searchFilter">   
-                    <option value="0">Distance (select)</option>
-                    @if (ViewData["Radius"].ToString() == "1")
-                    { 
-                        <option selected="selected" value="1">Within 1 mile</option>
-                    }
-                    else
-                    { 
-                        <option value="1">Within 1 mile</option>
-                    } 
-                    @if (ViewData["Radius"].ToString() == "3")
-                    { 
-                        <option selected="selected" value="3">Within 3 miles</option>
-                    }
-                    else
-                    { 
-                        <option value="3">Within 3 miles</option>
-                    } 
-                    @if (ViewData["Radius"].ToString() == "5")
-                    { 
-                        <option selected="selected" value="5">Within 5 miles</option>
-                    }
-                    else
-                    { 
-                        <option value="5">Within 5 miles</option>
-                    } 
-                    @if (ViewData["Radius"].ToString() == "10")
-                    { 
-                        <option selected="selected" value="10">Within 10 miles</option>
-                    }
-                    else
-                    { 
-                        <option value="10">Within 10 miles</option>
-                    } 
-                    @if (ViewData["Radius"].ToString() == "20")
-                    { 
-                        <option selected="selected" value="20">Within 20 miles</option>
-                    }
-                    else
-                    { 
-                        <option value="20">Within 20 miles</option>
-                    } 
-                    @if (ViewData["Radius"].ToString() == "40")
-                    { 
-                        <option selected="selected" value="40">Within 40 miles</option>
-                    }
-                    else
-                    { 
-                        <option value="40">Within 40 milse</option>
-                    } 
-                    @if (ViewData["Radius"].ToString() == "60")
-                    { 
-                        <option selected="selected" value="60">Within 60 miles</option>
-                    }
-                    else
-                    { 
-                        <option value="60">Within 60 miles</option>
-                    }                          
-                </select>
-            </p>
-        </fieldset>
-        <fieldset class="Type">
-            <div class="searchTypeField ">
-                <label for="searchType">Type</label>
-                <select id="searchType" name="type" class="searchFilter">
-                    <option class="" value="">Type (all)  </option>
-                    <option class="" value="concerts">Concerts </option>
-                    <option class="" value="festivals">Festivals </option>
-                    <option class="" value="live_music">Live Music </option>
-                    <option class="" value="nightclubs">Nightclubs </option>
-                    <option class="" value="pubs">Pubs </option>
-                </select>
-            </div>
-        </fieldset>
-        <fieldset class="Date">
-            <div class="searchDateField">                  
-                <p>Date Between: <input type="text" id="datepicker" name="afterDate">  <input type="text" id="datepicker2" name="beforeDate"></p>
-            </div>
-        </fieldset>
+<form action="/event/results/" method="get">
+	
+	<div class="clearfix">
+        <label for="postcode" title="This is a required field">Postcode:</label>
+        <div class="input">
+            <input id="postcode" name="postcode" type="text">
+        </div>
+    </div>
+    
+    <div class="clearfix">
+        <label for="radius">Distance:</label>
+        <div class="input">
+            <select name="radius" id="radius">
+                <% DISTANCE.each do |key, value| %>
+                    <option value="<%= key %>"
+                        <% if @search[:radius] == key.to_s %>
+                            selected="selected"
+                        <% end %>
+                    ><%= value %></option>
+                <% end %>
+            </select>
+        </div>
+    </div>
+    
+    <div class="clearfix">
+        <label for="searchType">Type:</label>
+        <div class="input">
+            <select name="radius" id="radius">
+                <% CATEGORIES.each do |key, value| %>
+                    <option value="<%= key %>"
+                        <% if @search[:type] == key.to_s %>
+                            selected="selected"
+                        <% end %>
+                    ><%= value %></option>
+                <% end %>
+            </select>
+        </div>
+    </div>
+    
+    <div class="clearfix">
+        <label for="dateFrom">Date From:</label>
+        <div class="input">
+            <input type="date" id="dateFrom" name="afterDate" value="<%= @search[:afterDate] %>">
+        </div>
         
-        <button class="omnitureTracking " id="search" type="submit">Search</button>
-    </form>
-</div>
+        <label for="dateTo">Date To:</label>
+        <div class="input">
+            <input type="date" id="dateTo" name="beforeDate" value="<%= @search[:beforeDate] %>">
+        </div>
+    </div>
+        
+    <div class="input">
+		<input type="submit" value="Search" class="btn primary">
+	</div>
+        
+</form>
+
 <div style="width: 700px; height: 500px" id="map">
-    why why why delila?
-    <%= @test.to_s %>
 </div>
-
-
