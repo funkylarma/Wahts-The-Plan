@@ -1,5 +1,53 @@
-<h2>Recently added events</h2>
+<form action="/event/results/" method="get">
+	<div id="Search">
+    <form id="Search Clubs">
+        <fieldset class="PostCode">
+            <p class="locationPostCode">
+                <label class="field" title="This is a required field"><span class="asterisk">*</span> Postcode: <em>(required)</em></label>
+                <span class="editMode " id="postCodeWrapper">
+                    <input id="postcode" name="postcode" class="postcode signInTrigger postcodeTopMargin" type="text" spellcheck="false">
+                </span>
+            </p>
+<p class="distance">
+<label for="radius">Distance</label>
+<select name="radius" id="radius" class="searchFilter">
+    <option selected="selected"value="0">Distance (select)</option>
+    <option value="1">Within 1 mile</option>
+    <option value="3">Within 3 miles</option>
+    <option value="5">Within 5 miles</option>
+    <option value="10">Within 10 miles</option>
+    <option value="20">Within 20 miles</option>
+    <option value="40">Within 40 miles</option>
+    <option value="60">Within 60 miles</option>                            
+</select>
+</p>
+        </fieldset>
+        <fieldset class="Type">
+            <div class="searchTypeField ">
+                <label for="searchType">Type</label>
+                <select id="searchType" name="type" class="searchFilter">
+                    <option class="" value="">Type (all)  </option>
+                    <option class="" value="Concert">Concerts </option>
+                    <option class="" value="Fesitival">Festivals </option>
+                    <option class="" value="Live Music">Live Music </option>
+                    <option class="" value="Night Club">Nightclubs </option>
+                    <option class="" value="Pub">Pubs </option>
+                </select>
+            </div>
+        </fieldset>
+        <fieldset class="Date">
+            <div class="searchDateField">                  
+                <p>Date Between: <input type="text" id="datepicker" name="afterDate">  <input type="text" id="datepicker2" name="beforeDate"></p>
+            </div>
+        </fieldset>
+        
+        <button class="btn" id="search" type="submit">Search</button>
+        
+    </form>
+</div>
 
+<div>
+<h2>Recently added events</h2>
 <% if @events.count != 0 %>
 	<ul>
 	<% @events.each do | event | %>
@@ -7,6 +55,7 @@
 	<% end %>
 	</ul>
 <% end %>
+</div>
 
 <% content_for :sidebar do %>
     <h3>Site Sponsors</h3>
