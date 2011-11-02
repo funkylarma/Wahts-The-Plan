@@ -1,116 +1,44 @@
+
+
 <h2>Events matching your search</h2>
-<div id="map">
-    <!-- Create map here -->
-    
+
+<div >
+	<ul class="tabs" data-tabs="tabs"> 		
+		<li class="active"><a href="#list">View As List</a></li>
+		<li><a href="#map">View As Map</a></li>		
+	</ul>	
+	<div id="my-tab-content" class="tab-content">
+		<div id="list" class="active">
+			<div class="search">
+	            	<select class="orderBy">
+	            		<option value="">Order By...</option>
+	            		<option value="Nearest">Nearest First</option>
+	            		<option value="Date">Date</option>
+	            		<option value="Alpha">A - Z</option>
+	            	</select>
+	        </div>   
+	                		
+			<ul>
+				<% @events.each do | event | %>
+				<li>
+					<a href="/event/<%= event.id %>"><%= event.title %></a>
+					<p><%= event.description %></p>
+				</li>
+				<% end %>	
+			</ul>
+		</div>
+			
+		<div id="map">
+		    <!-- Create map here -->	    
+		</div>
+	</div>
 </div>
+
 
 <% content_for :sidebar do %>
     <h3>Event Search</h3>
-    <form action="/event/results/" method="get">
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
-<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-<script src="../../js/Fluster2.js"></script>
-<script type="text/javascript">       
-    var postCode = '<%= @search[:postcode].to_s %>';
+<!-- maps javascript-->
 
-    var radius = '<%= @search[:radius].to_s %>';
-    
-    var latlng = new google.maps.LatLng(51.0, 0);
-    
-    $(document).ready(function () {
-        geocodePostcode(postCode);       
-
-    });
-    
-    function geocodePostcode(postcode) {
-        var geocoder = new google.maps.Geocoder();
-
-        geocoder.geocode({ 'address': postcode }, function (results, status) {
-            if (status == "OK") {
-                latlng = results[0].geometry.location;
-                var myOptions = {
-
-                    zoom: 10,
-                    center: latlng,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                //Create Map
-                var map = new google.maps.Map(document.getElementById("map"), myOptions);
-
-
-
-
-
-                var marker, markerset = [];
-
-                //lots of Test data
-                var json = []; json[0] = { 'id': 1, 'lat': 52.149549, 'lng': 1.60221 }; json[1] = { 'id': 2, 'lat': 52.7403984069824, 'lng': 0.514689087867737 }; json[2] = { 'id': 3, 'lat': 52.7369802416371, 'lng': 0.518964529037476 }; json[3] = { 'id': 4, 'lat': 52.7474555969238, 'lng': 0.487309098243713 }; json[4] = { 'id': 5, 'lat': 52.7497863769531, 'lng': 0.475821197032928 }; json[5] = { 'id': 6, 'lat': 52.7591618214666, 'lng': 0.46206146478653 }; json[6] = { 'id': 7, 'lat': 52.7583469756928, 'lng': 0.461747646331787 }; json[7] = { 'id': 8, 'lat': 52.9633903503418, 'lng': 0.637654960155487 }; json[8] = { 'id': 9, 'lat': 52.967691, 'lng': 0.667832 }; json[9] = { 'id': 10, 'lat': 52.968082, 'lng': 0.669579 }; json[10] = { 'id': 11, 'lat': 52.965928, 'lng': 0.677979 }; json[11] = { 'id': 12, 'lat': 52.965675, 'lng': 0.685261 }; json[12] = { 'id': 13, 'lat': 52.965807, 'lng': 0.685267 }; json[13] = { 'id': 14, 'lat': 52.958109, 'lng': 0.731833 }; json[14] = { 'id': 15, 'lat': 52.9652644942284, 'lng': 0.745734572410583 }; json[15] = { 'id': 16, 'lat': 52.958796, 'lng': 0.732989 }; json[16] = { 'id': 17, 'lat': 52.1710793290658, 'lng': 0.0979059934616089 }; json[17] = { 'id': 18, 'lat': 52.1654596050333, 'lng': 0.124870002269745 }; json[18] = { 'id': 19, 'lat': 52.7954800094571, 'lng': 0.470196604728699 }; json[19] = { 'id': 20, 'lat': 52.7559656557542, 'lng': 0.353697538375854 }; json[20] = { 'id': 21, 'lat': 52.952849, 'lng': 1.039474 }; json[21] = { 'id': 22, 'lat': 52.5057983398438, 'lng': 0.628326237201691 }; json[22] = { 'id': 23, 'lat': 52.932422, 'lng': 1.302218 }; json[23] = { 'id': 24, 'lat': 52.932251, 'lng': 1.303875 }; json[24] = { 'id': 25, 'lat': 52.933279, 'lng': 1.301105 }; json[25] = { 'id': 26, 'lat': 52.5849700982786, 'lng': 0.345251262187958 }; json[26] = { 'id': 27, 'lat': 52.584466528021, 'lng': 0.346549451351166 }; json[27] = { 'id': 28, 'lat': 52.5831236457156, 'lng': 0.344409048557281 }; json[28] = { 'id': 29, 'lat': 52.5855176632548, 'lng': 0.368071496486664 }; json[29] = { 'id': 30, 'lat': 52.5813179016113, 'lng': 0.341372787952423 }; json[30] = { 'id': 31, 'lat': 52.844123840332, 'lng': 0.513095855712891 }; json[31] = { 'id': 32, 'lat': 52.6034202575684, 'lng': 0.380149483680725 }; json[32] = { 'id': 33, 'lat': 52.6043891906738, 'lng': 0.365555584430695 }; json[33] = { 'id': 34, 'lat': 52.6028536828213, 'lng': 0.377182960510254 }; json[34] = { 'id': 35, 'lat': 52.8207969665527, 'lng': 0.710675418376923 }; json[35] = { 'id': 36, 'lat': 52.7146987915039, 'lng': 1.66650998592377 }; json[36] = { 'id': 37, 'lat': 52.7135009765625, 'lng': 1.66710996627808 }; json[37] = { 'id': 38, 'lat': 52.7174339294434, 'lng': 0.502350926399231 }; json[38] = { 'id': 39, 'lat': 52.84344, 'lng': 0.831501 }; json[39] = { 'id': 40, 'lat': 52.827313, 'lng': 0.848262 }; json[40] = { 'id': 41, 'lat': 52.7434959411621, 'lng': 0.56205689907074 }; json[41] = { 'id': 42, 'lat': 52.7434921264648, 'lng': 0.564505755901337 }; json[42] = { 'id': 43, 'lat': 52.1786441069918, 'lng': 0.0953525304794312 }; json[43] = { 'id': 44, 'lat': 52.1751556396484, 'lng': 0.0977236032485962 }; json[44] = { 'id': 45, 'lat': 52.7668228149414, 'lng': 0.549930572509766 }; json[45] = { 'id': 46, 'lat': 52.8022232055664, 'lng': 0.652130842208862 }; json[46] = { 'id': 47, 'lat': 52.9038548495594, 'lng': 0.468423664569855 }; json[47] = { 'id': 48, 'lat': 52.902587890625, 'lng': 0.47216534614563 }; json[48] = { 'id': 49, 'lat': 52.7004246967617, 'lng': 1.70689344406128 }; json[49] = { 'id': 50, 'lat': 52.7003548057212, 'lng': 1.70630872249603 }; json[50] = { 'id': 51, 'lat': 52.7002979175823, 'lng': 1.70524656772614 }; json[51] = { 'id': 52, 'lat': 52.6951061564379, 'lng': 1.7096346616745 }; json[52] = { 'id': 53, 'lat': 52.562336, 'lng': 0.38943 }; json[53] = { 'id': 54, 'lat': 52.562475, 'lng': 0.390345 }; json[54] = { 'id': 55, 'lat': 52.553244, 'lng': 0.36853 }; json[55] = { 'id': 56, 'lat': 52.555908, 'lng': 0.369099 }; json[56] = { 'id': 57, 'lat': 52.552686, 'lng': 0.368396 }; json[57] = { 'id': 58, 'lat': 52.56359, 'lng': 0.391863 }; json[58] = { 'id': 59, 'lat': 52.7972429026522, 'lng': 0.554045140743256 }; json[59] = { 'id': 60, 'lat': 52.7969217921946, 'lng': 0.554616451263428 }; json[60] = { 'id': 61, 'lat': 52.7418568711856, 'lng': 1.6387277841568 }; json[61] = { 'id': 62, 'lat': 52.9426578523677, 'lng': 0.487917959690094 }; json[62] = { 'id': 63, 'lat': 52.9481391906738, 'lng': 0.491005182266235 }; json[63] = { 'id': 64, 'lat': 52.9410820007324, 'lng': 0.486595630645752 }; json[64] = { 'id': 65, 'lat': 52.7494881965049, 'lng': 0.394166707992554 }; json[65] = { 'id': 66, 'lat': 52.7566636703144, 'lng': 0.39175271987915 }; json[66] = { 'id': 67, 'lat': 52.756438034273, 'lng': 0.391798317432404 }; json[67] = { 'id': 68, 'lat': 52.757278887827, 'lng': 0.391452312469482 }; json[68] = { 'id': 69, 'lat': 52.7537579081619, 'lng': 0.392329394817352 }; json[69] = { 'id': 70, 'lat': 52.753283877176, 'lng': 0.392404496669769 }; json[70] = { 'id': 71, 'lat': 52.7602720648766, 'lng': 0.395054519176483 }; json[71] = { 'id': 72, 'lat': 52.7554023660818, 'lng': 0.391414761543274 }; json[72] = { 'id': 73, 'lat': 52.7676762100927, 'lng': 0.402846336364746 }; json[73] = { 'id': 74, 'lat': 52.7614374653778, 'lng': 0.390521585941315 }; json[74] = { 'id': 75, 'lat': 52.7603337442362, 'lng': 0.393662452697754 }; json[75] = { 'id': 76, 'lat': 52.7514266649918, 'lng': 0.393455922603607 }; json[76] = { 'id': 77, 'lat': 52.7534494639285, 'lng': 0.392517149448395 }; json[77] = { 'id': 78, 'lat': 52.7619503615652, 'lng': 0.417941808700562 }; json[78] = { 'id': 79, 'lat': 52.7547351749428, 'lng': 0.400198996067047 }; json[79] = { 'id': 80, 'lat': 52.7459907531738, 'lng': 0.401837825775146 }; json[80] = { 'id': 81, 'lat': 52.7453842163086, 'lng': 0.401574969291687 }; json[81] = { 'id': 82, 'lat': 52.752626, 'lng': 0.399392 }; json[82] = { 'id': 83, 'lat': 52.7514899803471, 'lng': 0.394802391529083 }; json[83] = { 'id': 84, 'lat': 52.751939679069, 'lng': 0.394590497016907 }; json[84] = { 'id': 85, 'lat': 52.7574081420898, 'lng': 0.397312939167023 }; json[85] = { 'id': 86, 'lat': 52.7574233571704, 'lng': 0.397058129310608 }; json[86] = { 'id': 87, 'lat': 52.7575492858887, 'lng': 0.396197140216827 }; json[87] = { 'id': 88, 'lat': 52.757740020752, 'lng': 0.397007167339325 }; json[88] = { 'id': 89, 'lat': 52.7523276825392, 'lng': 0.40113240480423 }; json[89] = { 'id': 90, 'lat': 52.7515716552734, 'lng': 0.404772162437439 }; json[90] = { 'id': 91, 'lat': 52.7513730903885, 'lng': 0.399447977542877 }; json[91] = { 'id': 92, 'lat': 52.7584476148406, 'lng': 0.396714806556702 }; json[92] = { 'id': 93, 'lat': 52.7559169566466, 'lng': 0.393716096878052 }; json[93] = { 'id': 94, 'lat': 52.7561988830566, 'lng': 0.394403010606766 }; json[94] = { 'id': 95, 'lat': 52.1049003601074, 'lng': 0.802026093006134 }; json[95] = { 'id': 96, 'lat': 52.1044044494629, 'lng': 0.802009999752045 }; json[96] = { 'id': 97, 'lat': 52.1055892263983, 'lng': 0.791831016540527 }; json[97] = { 'id': 98, 'lat': 52.1089778710857, 'lng': 0.796492695808411 }; json[98] = { 'id': 99, 'lat': 52.676219453845, 'lng': 0.363117456436157 }; json[99] = { 'id': 100, 'lat': 52.7157020568848, 'lng': 0.460135638713837 }; json[100] = { 'id': 101, 'lat': 52.876918, 'lng': 1.440899 }; json[101] = { 'id': 102, 'lat': 52.876596, 'lng': 1.441341 }; json[102] = { 'id': 103, 'lat': 52.878134, 'lng': 1.438131 }; json[103] = { 'id': 104, 'lat': 52.878285, 'lng': 1.437364 }; json[104] = { 'id': 105, 'lat': 52.6891822814941, 'lng': 0.584474802017212 }; json[105] = { 'id': 106, 'lat': 52.6898715079234, 'lng': 0.584203898906708 }; json[106] = { 'id': 107, 'lat': 52.938455172814, 'lng': 0.483033657073975 }; json[107] = { 'id': 108, 'lat': 52.771663, 'lng': 0.384071 }; json[108] = { 'id': 109, 'lat': 52.7155113220215, 'lng': 0.436226427555084 }; json[109] = { 'id': 110, 'lat': 52.823524, 'lng': 1.372382 }; json[110] = { 'id': 111, 'lat': 52.821284, 'lng': 1.386361 }; json[111] = { 'id': 112, 'lat': 52.9439638327202, 'lng': 0.486263036727905 }; json[112] = { 'id': 113, 'lat': 52.7096444566706, 'lng': 1.58048361539841 }; json[113] = { 'id': 114, 'lat': 52.7833729877827, 'lng': 0.376646518707275 }; json[114] = { 'id': 115, 'lat': 52.7404944578492, 'lng': 0.387211740016937 }; json[115] = { 'id': 116, 'lat': 52.7834014892578, 'lng': 0.376845002174377 }; json[116] = { 'id': 117, 'lat': 52.7002983093262, 'lng': 0.379900008440018 }; json[117] = { 'id': 118, 'lat': 52.7647933959961, 'lng': 0.387168824672699 }; json[118] = { 'id': 119, 'lat': 52.7280927524217, 'lng': 0.370874404907227 }; json[119] = { 'id': 120, 'lat': 52.7295303344727, 'lng': 0.375600010156631 }; json[120] = { 'id': 121, 'lat': 52.7845153808594, 'lng': 0.374822616577148 }; json[121] = { 'id': 122, 'lat': 52.781556, 'lng': 0.377717 }; json[122] = { 'id': 123, 'lat': 52.6591720581055, 'lng': 0.389534533023834 }; json[123] = { 'id': 124, 'lat': 52.7153593071804, 'lng': 0.379685461521149 }; json[124] = { 'id': 125, 'lat': 52.832666, 'lng': 0.512761 }; json[125] = { 'id': 126, 'lat': 52.7931365966797, 'lng': 1.59836053848267 }; json[126] = { 'id': 127, 'lat': 52.6937829225792, 'lng': 0.414170622825623 }; json[127] = { 'id': 128, 'lat': 52.945596, 'lng': 1.21415 }; json[128] = { 'id': 129, 'lat': 52.945784, 'lng': 1.210932 }; json[129] = { 'id': 130, 'lat': 52.943212, 'lng': 1.225155 }; json[130] = { 'id': 131, 'lat': 52.943899, 'lng': 1.22136 }; json[131] = { 'id': 132, 'lat': 52.209691, 'lng': 1.623058 }; json[132] = { 'id': 133, 'lat': 52.8659172058105, 'lng': 0.449538230895996 }; json[133] = { 'id': 134, 'lat': 52.8705749511719, 'lng': 0.452214986085892 }; json[134] = { 'id': 135, 'lat': 52.7766914367676, 'lng': 0.434925556182861 }; json[135] = { 'id': 136, 'lat': 52.326757, 'lng': 1.682652 }; json[136] = { 'id': 137, 'lat': 52.327183, 'lng': 1.680356 }; json[137] = { 'id': 138, 'lat': 52.9560907572665, 'lng': 0.924466252326965 }; json[138] = { 'id': 139, 'lat': 52.6470680236816, 'lng': 0.688134133815765 }; json[139] = { 'id': 140, 'lat': 52.6554298400879, 'lng': 0.67866325378418 }; json[140] = { 'id': 141, 'lat': 52.9685935974121, 'lng': 0.569604635238647 }; json[141] = { 'id': 142, 'lat': 52.184487, 'lng': 1.620548 }; json[142] = { 'id': 143, 'lat': 52.183517, 'lng': 1.610634 }; json[143] = { 'id': 144, 'lat': 52.184461, 'lng': 1.61164 }; json[144] = { 'id': 145, 'lat': 52.179888, 'lng': 1.612716 }; json[145] = { 'id': 146, 'lat': 52.179725, 'lng': 1.611914 }; json[146] = { 'id': 147, 'lat': 52.6708068847656, 'lng': 0.423008501529694 }; json[147] = { 'id': 148, 'lat': 52.6704940795898, 'lng': 0.423040688037872 }; json[148] = { 'id': 149, 'lat': 52.1736907958984, 'lng': 0.108414888381958 }; json[149] = { 'id': 150, 'lat': 52.4499168395996, 'lng': 0.716466009616852 }; json[150] = { 'id': 151, 'lat': 52.6739082336426, 'lng': 0.396497547626495 }; json[151] = { 'id': 152, 'lat': 52.667415551291, 'lng': 0.391688346862793 }; json[152] = { 'id': 153, 'lat': 52.6735992431641, 'lng': 0.391699999570847 }; json[153] = { 'id': 154, 'lat': 52.6737060546875, 'lng': 0.393198430538177 }; json[154] = { 'id': 155, 'lat': 52.9574496530101, 'lng': 0.851169526576996 }; json[155] = { 'id': 156, 'lat': 52.9583282470703, 'lng': 0.85070013999939 }; json[156] = { 'id': 157, 'lat': 52.9624243659423, 'lng': 0.8503058552742 }; json[157] = { 'id': 158, 'lat': 52.9720684111728, 'lng': 0.850249528884888 }; json[158] = { 'id': 159, 'lat': 52.957052, 'lng': 0.854933 }; json[159] = { 'id': 160, 'lat': 52.957854, 'lng': 0.850885 }; json[160] = { 'id': 161, 'lat': 52.959038, 'lng': 0.850925 }; json[161] = { 'id': 162, 'lat': 52.7511295686342, 'lng': 0.386621654033661 }; json[162] = { 'id': 163, 'lat': 52.7510435239556, 'lng': 0.386981070041656 }; json[163] = { 'id': 164, 'lat': 52.776015, 'lng': 0.376539 }; json[164] = { 'id': 165, 'lat': 52.786533, 'lng': 0.369426 }; json[165] = { 'id': 166, 'lat': 52.783183, 'lng': 0.371996 }; json[166] = { 'id': 167, 'lat': 52.7557144165039, 'lng': 0.388818383216858 }; json[167] = { 'id': 168, 'lat': 52.7537108299728, 'lng': 0.389370918273926 }; json[168] = { 'id': 169, 'lat': 52.7515581660114, 'lng': 0.390454530715942 }; json[169] = { 'id': 170, 'lat': 52.7228799298976, 'lng': 1.64912670850754 }; json[170] = { 'id': 171, 'lat': 52.7158451243186, 'lng': 0.414449572563171 }; json[171] = { 'id': 172, 'lat': 52.6930274963379, 'lng': 0.372671484947205 }; json[172] = { 'id': 173, 'lat': 52.6933326721191, 'lng': 0.3730309009552 }; json[173] = { 'id': 174, 'lat': 52.7156982421875, 'lng': 1.6975200176239 }; json[174] = { 'id': 175, 'lat': 52.6420559982258, 'lng': 0.384714603424072 }; json[175] = { 'id': 176, 'lat': 52.6429657861301, 'lng': 0.387192964553833 }; json[176] = { 'id': 177, 'lat': 52.643913269043, 'lng': 0.386157631874084 }; json[177] = { 'id': 178, 'lat': 52.6443784425434, 'lng': 0.386817455291748 };
-
-                for (var i = 0; i < json.length; i++) {
-                    marker = newMarker(new google.maps.LatLng(json[i].lat, json[i].lng), json[i].id);
-                    markerset.push(marker);
-                }
-                var fluster = new MarkerClusterer(map, markerset);
-                //                for (var i = 0; i < Model.Count ; i++) {
-                //                    
-                //                    <text>
-                //                    marker = newMarker(new google.maps.LatLng(Model[i].LatLang), "Model[i].EventTitle");
-                //                    fluster.addMarker(marker);
-                //                    </text>
-                //                    
-                //                }
-
-                
-
-
-
-                function newMarker(markerLocation, markerTitle) {
-                    var marker = new google.maps.Marker({ position: markerLocation, title: 'Marker[' + markerTitle + ']' });
-                    var contentString = '<p>Marker[' + markerTitle + '] clicked.</p>'
-                    var infowindow = new google.maps.InfoWindow({ content: contentString });
-                    google.maps.event.addListener(marker, 'click', function () {
-                        infowindow.open(map, marker);
-                    });
-                    return marker;
-                }
-
-
-
-
-                //Add info to position
-
-
-                //Radius
-                var radiusInMeters = radius * 1609.344;
-                var radiusCircle;
-                var radiusOptions = {
-                    strokeColor: "#00ffff",
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: "#00ffff",
-                    fillOpacity: 0.35,
-                    map: map,
-                    center: latlng,
-                    radius: radiusInMeters
-                };
-                radiusCircle = new google.maps.Circle(radiusOptions);
-
-
-
-            }
-            else {
-                console.log("Unable to geocode location");
-            }
-        });
-
-      
-    }
-
-
-   
-</script>    
 <form action="/event/results/" method="get">
 	    <div class="clearfix">
 	        <label for="postcode" title="This is a required field">Postcode:</label>
@@ -154,4 +82,104 @@
 			<input type="submit" value="Search" class="btn primary">
 	
 	</form>
+<% end %>
+<% content_for :js_footer do %>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="../../js/Fluster2.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.js"></script>
+<!--google maps script-->
+<script type="text/javascript">       
+    var postCode = '<%= @search[:postcode].to_s %>';
+
+    var radius = '<%= @search[:radius].to_s %>';
+    
+    var latlng = new google.maps.LatLng(51.0, 0);
+    
+    $(document).ready(function () {
+    	$('.tabs').tabs();
+		$('.tabs').bind('change', function (e) {
+  			e.target// activated tab
+  			e.relatedTarget // previous tab
+  		});
+        geocodePostcode(postCode);   
+    });
+    
+    function geocodePostcode(postcode) {
+        var geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({ 'address': postcode }, function (results, status) {
+            if (status == "OK") {
+                latlng = results[0].geometry.location;
+                var myOptions = {
+
+                    zoom: 10,
+                    zoom: 10,
+                    center: latlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                //Create Map
+                var map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+                var marker, markerset = [];
+
+                //lots of Test data
+                var json = [];
+                
+                <% @locations.each_with_index do |key, i|  %>
+                	
+				json[<%= i%>] = { 'id': '<%= key[0] %> ', 'lng': '<%= key[1][0]%>', 'lat': '<%= key[1][1] %>'}
+					
+                	
+                <% end %>
+                //var json = %= @jsonString%>
+               
+                for (var i = 0; i < json.length; i++) {
+                    marker = newMarker(new google.maps.LatLng(json[i].lat, json[i].lng), json[i].id);
+                    markerset.push(marker);
+                }
+                //for (var i = 0; i < json.length; i++) {
+                    //marker = newMarker(new google.maps.LatLng(json[i].lat, json[i].lng), json[i].id);
+                    //markerset.push(marker);
+                //}
+                
+                var fluster = new MarkerClusterer(map, markerset);
+                //for (var i = 0; i < Model.Count ; i++) {                // 
+                // <text>
+                // marker = newMarker(new google.maps.LatLng(Model[i].LatLang), "Model[i].EventTitle");
+                // fluster.addMarker(marker);
+                // </text>       
+                // }
+                function newMarker(markerLocation, markerTitle) {
+                    var marker = new google.maps.Marker({ position: markerLocation, title: 'Marker[' + markerTitle + ']' });
+                    var contentString = '<p>Marker[' + markerTitle + '] clicked.</p>'
+                    var infowindow = new google.maps.InfoWindow({ content: contentString });
+                    google.maps.event.addListener(marker, 'click', function () {
+                        infowindow.open(map, marker);
+                    });
+                    return marker;
+                }
+                //Add info to position
+
+
+                //Radius
+                var radiusInMeters = radius * 1609.344;
+                var radiusCircle;
+                var radiusOptions = {
+                    strokeColor: "#00ffff",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: "#00ffff",
+                    fillOpacity: 0.35,
+                    map: map,
+                    center: latlng,
+                    radius: radiusInMeters
+                };
+                radiusCircle = new google.maps.Circle(radiusOptions);
+            }
+            else {
+                console.log("Unable to geocode location");
+            }
+        });
+    }
+</script>  
 <% end %>

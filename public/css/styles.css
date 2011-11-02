@@ -52,3 +52,11 @@ body {
 	width: 560px;
 	height: 500px;
 }
+.searching{
+	list-style: none;
+	list-style-position: inline;
+}
+
+@media all and (min-width: 860px){
+	
+}

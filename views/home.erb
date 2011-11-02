@@ -4,8 +4,12 @@
         <label for="postcode" title="This is a required field">Postcode:</label>
         <div class="input">
             <input id="postcode" name="postcode" type="text">
+            <a href="#" id="btnLoc" class="btn" title="Find my location">Find my location</a>
         </div>
+        <input type="hidden" name="latitude" id="latitude" placeholder="Latitude" >
+        <input type="hidden" name="longitude" id="longitude" placeholder="Longitude">
     </div>
+    
     
     <div class="clearfix">
         <label for="radius">Distance:</label>
@@ -78,3 +82,18 @@
         </li>
     </ul>
 <% end %>
+<% content_for :js_footer do%>
+<script src="../../js/init.js"></script>
+<script src="../../js/geo.js"></script>
+<script type="text/javascript">  
+	$(document).ready(function(){
+		$("#btnLoc").click(function() {
+			initiate_geolocation();
+			return false;
+		});
+	});	
+	
+        
+    
+</script>
+<%end%>
