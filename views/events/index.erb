@@ -1,14 +1,11 @@
 <% if @events.count != 0 %>
 	<ul>
 	<% @events.each do | event | %>
-		<li><%= event.title %></li>
+		<li><a href="/event/<%= event.id %>" title="<%= event.title %>"><%= event.title %></a></li>
 	<% end %>
 	</ul>
 <% end %>
 
 <% content_for :sidebar do %>
     <h3>Search for events</h3>
-    <form action="/event/search" method="post">
-    	<in>
-    </form>
 <% end %>
