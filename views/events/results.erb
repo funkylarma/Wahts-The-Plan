@@ -1,3 +1,11 @@
+<h2>Events matching your search</h2>
+<div id="map">
+    <!-- Create map here -->
+</div>
+
+<% content_for :sidebar do %>
+    <h3>Event Search</h3>
+    <form action="/event/results/" method="get">
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
@@ -103,17 +111,13 @@
    
 </script>    
 <form action="/event/results/" method="get">
-	
-	<div class="clearfix">
-        <label for="postcode" title="This is a required field">Postcode:</label>
-        <div class="input">
-            <input id="postcode" name="postcode" type="text">
-        </div>
-    </div>
-    
-    <div class="clearfix">
-        <label for="radius">Distance:</label>
-        <div class="input">
+	    <div class="clearfix">
+	        <label for="postcode" title="This is a required field">Postcode:</label>
+	        <input id="postcode" name="postcode" type="text" value="<%= @search[:postcode] %>">
+	    </div>
+	    
+	    <div class="clearfix">
+	        <label for="radius">Distance:</label>
             <select name="radius" id="radius">
                 <% DISTANCE.each do |key, value| %>
                     <option value="<%= key %>"
@@ -123,12 +127,10 @@
                     ><%= value %></option>
                 <% end %>
             </select>
-        </div>
-    </div>
-    
-    <div class="clearfix">
-        <label for="searchType">Type:</label>
-        <div class="input">
+	    </div>
+	    
+	    <div class="clearfix">
+	        <label for="searchType">Type:</label>
             <select name="radius" id="radius">
                 <% CATEGORIES.each do |key, value| %>
                     <option value="<%= key %>"
@@ -138,26 +140,17 @@
                     ><%= value %></option>
                 <% end %>
             </select>
-        </div>
-    </div>
-    
-    <div class="clearfix">
-        <label for="dateFrom">Date From:</label>
-        <div class="input">
-            <input type="date" id="dateFrom" name="afterDate" value="<%= @search[:afterDate] %>">
-        </div>
-        
-        <label for="dateTo">Date To:</label>
-        <div class="input">
-            <input type="date" id="dateTo" name="beforeDate" value="<%= @search[:beforeDate] %>">
-        </div>
-    </div>
-        
-    <div class="input">
-		<input type="submit" value="Search" class="btn primary">
-	</div>
-        
-</form>
-<div style="width: 700px; height: 500px" id="map">
-	why why why delila
-</div>
+	    </div>
+	    
+	    <div class="clearfix">
+	        <label for="dateFrom">Date From:</label>
+	        <input type="date" id="dateFrom" name="afterDate" value="<%= @search[:afterDate] %>">
+	        
+	        <label for="dateTo">Date To:</label>
+	        <input type="date" id="dateTo" name="beforeDate" value="<%= @search[:beforeDate] %>">
+	    </div>
+	        
+			<input type="submit" value="Search" class="btn primary">
+	
+	</form>
+<% end %>
