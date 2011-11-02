@@ -1,6 +1,7 @@
 <h2>Events matching your search</h2>
 <div id="map">
     <!-- Create map here -->
+    
 </div>
 
 <% content_for :sidebar do %>
@@ -12,9 +13,9 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 <script src="../../js/Fluster2.js"></script>
 <script type="text/javascript">       
-    var postCode = '<%= @postcode.to_s %>';
+    var postCode = '<%= @search[:postcode].to_s %>';
 
-    var radius = '<%= @radius.to_s %>';
+    var radius = '<%= @search[:radius].to_s %>';
     
     var latlng = new google.maps.LatLng(51.0, 0);
     
@@ -121,7 +122,7 @@
             <select name="radius" id="radius">
                 <% DISTANCE.each do |key, value| %>
                     <option value="<%= key %>"
-                        <% if @search[:radius] == key.to_s %>
+                        <% if @search[:radius].to_s == key.to_s %>
                             selected="selected"
                         <% end %>
                     ><%= value %></option>
@@ -131,7 +132,7 @@
 	    
 	    <div class="clearfix">
 	        <label for="searchType">Type:</label>
-            <select name="radius" id="radius">
+            <select name="type" id="type">
                 <% CATEGORIES.each do |key, value| %>
                     <option value="<%= key %>"
                         <% if @search[:type] == key.to_s %>
