@@ -1,4 +1,25 @@
+function createMap(lat, lng, zoom) {
+	var latlng = new google.maps.LatLng(lat, lng);
+    var myOptions = {
+    		zoom: zoom,
+    		center: latlng,
+    		mapTypeId: google.maps.MapTypeId.ROADMAP
+    	};
+    var map = new google.maps.Map(document.getElementById('map'), myOptions);
+    return map;
+}
 
+function dropPin(lat, lng, map) {
+	var latlng = new google.maps.LatLng(lat, lng);
+	var marker = new google.maps.Marker({
+		position: latlng,
+		draggable: true,
+		map: map,
+		icon: '/img/info.png',
+		animation: google.maps.Animation.DROP
+	});
+	return marker;
+}
 
 function geocodePosition(lat, lng) {
 	var latlng = new google.maps.LatLng(lat, lng);
@@ -13,17 +34,8 @@ function geocodePosition(lat, lng) {
 }
 
 
-function panToPoint(map, point, zoom) {
-	window.setTimeout(function(){
-		map.panTo(point);
-		if (zoom != undefined) {
-			map.setZoom(zoom);
-		}
-	}, 400);
-}
-
 function updateMarkerAddress(str) {
-	$('#postcode').val(str);
+	$('#location').val(str);
 }
 
 function updateLatitude(lat) {
