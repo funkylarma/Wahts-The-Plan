@@ -1,0 +1,59 @@
+<form action="/event/results/" method="get">
+	
+	<div class="clearfix">
+        <label for="postcode" title="This is a required field">Postcode:</label>
+        <div class="input">
+            <input id="postcode" name="postcode" type="text">
+        </div>
+    </div>
+    
+    <div class="clearfix">
+        <label for="radius">Distance:</label>
+        <div class="input">
+            <select name="radius" id="radius">
+                <% DISTANCE.each do |key, value| %>
+                    <option value="<%= key %>"
+                        <% if @search[:radius] == key.to_s %>
+                            selected="selected"
+                        <% end %>
+                    ><%= value %></option>
+                <% end %>
+            </select>
+        </div>
+    </div>
+    
+    <div class="clearfix">
+        <label for="searchType">Type:</label>
+        <div class="input">
+            <select name="radius" id="radius">
+                <% CATEGORIES.each do |key, value| %>
+                    <option value="<%= key %>"
+                        <% if @search[:type] == key.to_s %>
+                            selected="selected"
+                        <% end %>
+                    ><%= value %></option>
+                <% end %>
+            </select>
+        </div>
+    </div>
+    
+    <div class="clearfix">
+        <label for="dateFrom">Date From:</label>
+        <div class="input">
+            <input type="date" id="dateFrom" name="afterDate" value="<%= @search[:afterDate] %>">
+        </div>
+        
+        <label for="dateTo">Date To:</label>
+        <div class="input">
+            <input type="date" id="dateTo" name="beforeDate" value="<%= @search[:beforeDate] %>">
+        </div>
+    </div>
+        
+    <div class="input">
+		<input type="submit" value="Search" class="btn primary">
+	</div>
+        
+</form>
+
+<div style="width: 700px; height: 500px" id="map">
+</div>

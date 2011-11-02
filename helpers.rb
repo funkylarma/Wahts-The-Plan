@@ -29,6 +29,21 @@ helpers do
     Geokit::Geocoders::GoogleGeocoder.reverse_geocode([lat, lon]).full_address
   end
   
+  def deg2rad(deg) 
+    return (deg * Math::PI / 180)
+  end
+
+  def rad2deg(rad) 
+    return (rad / Math::PI * 180)
+  end
+
+  def getDistance(lat1,lon1,lat2,lon2) 
+      theta = lon1 - lon2
+      dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta))
+      rounded = (rad2deg(Math.acos(dist))* 60 * 1.1515 * 1.609344 * 1000).round(0)
+      return (rounded).abs    
+  end
+  
   #Promoter Helper methods
   def login_required
     if session[:promoter]

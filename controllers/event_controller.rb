@@ -6,6 +6,29 @@ get '/event' do
   erb :'/events/index'
 end
 
+get '/event/results/*' do
+  @search = {
+    :postcode => params[:postcode],
+    :type => params[:type],
+    :afterDate => params[:afterDate],
+    :beforeDate => params[:beforeDate],
+    :radius => params[:radius]
+  }
+  location = geocode(params[:postcode])
+  latlng = Array[location.lng.to_f, location.lat.to_f]
+  allEvents = Event.all  
+  @locations = Hash.new
+
+  allEvents.each do |event|
+      distanceInMiles = ((getDistance(location.lat.to_f,location.lng.to_f,event.location[1],event.location[0])) / 1000 ) * 0.621371192
+      @test = distanceInMiles
+      if distanceInMiles.to_f <= params[:radius].to_f
+       @locations[event.id] = event.title
+      end
+  end
+  erb :'events/results' 
+end
+
 get '/event/create' do
   login_required
   @pageTitle = promoter_name
