@@ -1,0 +1,28 @@
+<form action="/promoter/edit" method="post">
+	
+	<div class="clearfix">
+		<label for="promoter_name">Name:</label>
+		<div class="input">
+			<input type="text" name="promoter[name]" id="promoter_name" value="<%= @promoter.name %>">
+		</div>
+	</div>
+	
+	<div class="clearfix">
+		<label for="promoter_address">Address</label>
+		<div class="input">
+			<input type="text" name="promoter[address]" id="promoter_address" value="<%= @promoter.address %>">
+		</div>
+	</div>
+	
+	<div class="clearfix">
+		<label for="promoter_email">Email address</label>
+		<div class="input">
+			<input type="text" name="promoter[email]" id="promoter_email" value="<%= @promoter.email %>">
+		</div>
+	</div>
+	
+	<div class="input">
+		<input type="submit" value="Update details" class="btn primary">
+	</div>
+
+</form>

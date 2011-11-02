@@ -102,109 +102,62 @@
 
    
 </script>    
-<script>
-    $(function () {
-        $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' });
-        $("#datepicker2").datepicker({ dateFormat: 'dd/mm/yy' });
-    });
-</script>
-
-<div id="leftsearch">
-    <form id="Search Clubs">
-        <fieldset class="PostCode">
-            <p class="locationPostCode">
-                <label class="field" title="This is a required field"><span class="asterisk">*</span> Postcode: <em>(required)</em></label>
-                <span class="editMode " id="postCodeWrapper">
-                    <input id="postcode"value="<%=@postcode%>" name="postcode" class="postcode signInTrigger postcodeTopMargin" type="text" spellcheck="false">
-                </span>
-            </p>
-            <p class="distance">
-                <label for="radius">Distance</label>
-                <select name="radius" id="radius" class="searchFilter">   
-                    <option value="0">Distance (select)</option>
-                    <% if @radius.to_s() == "1"  %>                  
-                        <option selected="selected" value="1">Within 1 mile</option>                    
-                    <% else %>                    
-                        <option value="1">Within 1 mile</option>
-                    <%end%> 
-                    <%if @radius.to_s() == "3"  %>               
-                        <option selected="selected" value="3">Within 3 miles</option>                    
-                    <% else %>                       
-                        <option value="3">Within 3 miles</option>
-                    <%end%>  
-                    <%if @radius.to_s() == "5" %>                  
-                        <option selected="selected" value="5">Within 5 miles</option>                    
-                    <% else %>                       
-                        <option value="5">Within 5 miles</option>
-                    <%end%> 
-                    <%if @radius.to_s() == "10"   %>               
-                        <option selected="selected" value="10">Within 10 miles</option>                    
-                    <% else %>  
-                    	<option value="10">Within 10 miles</option>
-                    <%end%> 
-                    <%if @radius.to_s() == "20"  %>                  
-                        <option selected="selected" value="20">Within 20 miles</option>                    
-                    <% else %>  
-                        <option value="20">Within 20 miles</option>
-                    <%end%> 
-                    <%if @radius.to_s() == "40" %>                   
-                        <option selected="selected" value="40">Within 40 miles</option>                    
-                    <% else %>                       
-                        <option value="40">Within 40 milse</option>
-                    <%end%> 
-                    <%if @radius.to_s() == "60"  %>                  
-                        <option selected="selected" value="60">Within 60 miles</option>                   
-                    <% else %>  
-                        <option value="60">Within 60 miles</option>
-                    <%end%>     
-                    %>                      
-                </select>
-                </p>
-        </fieldset>
-        <fieldset class="Type">
-            <div class="searchTypeField ">
-                <label for="searchType">Type</label>
-                <select id="searchType" name="type" class="searchFilter">
-                    <option class="" value="">Type (all)  </option>
-                    <% if @type.to_s == "concerts"%>                    
-                    	<option class="" value="concerts" selected="selected">Concerts </option>
-                    <%else%>                    
-                    	<option class="" value="concerts">Concerts </option>
-                    <%end%>
-                    <% if @type.to_s == "festivals"%>
-                    	<option class="" value="festivals" selected="selected">Festivals </option>
-                    <%else%> 
-                   		<option class="" value="festivals">Festivals </option>
-                    <%end%>
-                    <% if @type.to_s == "live_music"%>
-                    	<option class="" value="live_music" selected="selected">Live Music </option>
-                    <%else%>
-                    	<option class="" value="live_music">Live Music </option>
-                    <%end%>
-                    <% if @type.to_s == "nightclubs"%>
-                    	<option class="" value="nightclubs" selected="selected">Nightclubs </option>
-                    <%else%>
-                    	<option class="" value="nightclubs">Nightclubs </option>
-                    <%end%>
-                    <% if @type.to_s == "pubs"%>
-                    	<option class="" value="pubs" selected="selected">Pubs </option>
-                    <%else%>
-                    	<option class="" value="pubs" >Pubs </option>
-                    <%end%>
-                </select>
-            </div>
-        </fieldset>
-        <fieldset class="Date">
-            <div class="searchDateField">                  
-                <p>Date Between: <input type="text" id="datepicker" name="afterDate">  <input type="text" id="datepicker2" name="beforeDate"></p>
-            </div>
-        </fieldset>
+<form action="/event/results/" method="get">
+	
+	<div class="clearfix">
+        <label for="postcode" title="This is a required field">Postcode:</label>
+        <div class="input">
+            <input id="postcode" name="postcode" type="text">
+        </div>
+    </div>
+    
+    <div class="clearfix">
+        <label for="radius">Distance:</label>
+        <div class="input">
+            <select name="radius" id="radius">
+                <% DISTANCE.each do |key, value| %>
+                    <option value="<%= key %>"
+                        <% if @search[:radius] == key.to_s %>
+                            selected="selected"
+                        <% end %>
+                    ><%= value %></option>
+                <% end %>
+            </select>
+        </div>
+    </div>
+    
+    <div class="clearfix">
+        <label for="searchType">Type:</label>
+        <div class="input">
+            <select name="radius" id="radius">
+                <% CATEGORIES.each do |key, value| %>
+                    <option value="<%= key %>"
+                        <% if @search[:type] == key.to_s %>
+                            selected="selected"
+                        <% end %>
+                    ><%= value %></option>
+                <% end %>
+            </select>
+        </div>
+    </div>
+    
+    <div class="clearfix">
+        <label for="dateFrom">Date From:</label>
+        <div class="input">
+            <input type="date" id="dateFrom" name="afterDate" value="<%= @search[:afterDate] %>">
+        </div>
         
-        <button class="btn " id="search" type="submit">Search</button>
-    </form>
-</div>
+        <label for="dateTo">Date To:</label>
+        <div class="input">
+            <input type="date" id="dateTo" name="beforeDate" value="<%= @search[:beforeDate] %>">
+        </div>
+    </div>
+        
+    <div class="input">
+		<input type="submit" value="Search" class="btn primary">
+	</div>
+        
+</form>
 <div style="width: 700px; height: 500px" id="map">
-    why why why delila?    
+	why why why delila
 </div>
-
-
