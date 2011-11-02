@@ -35,7 +35,7 @@
 					<li><a href="/promoter">Visit Promoters</a></li>
 				</ul>
 				<% if logged_in? %>
-					<p class="pull-right">Logged in as <a href="/promoter/profile" title="Your profile"><%= current_user.email %></a></p>
+					<p class="pull-right">Logged in as <a href="/promoter/profile" title="Your profile"><%= promoter_name %></a></p>
 				<% else %>
 					<form action="/promoter/login" method="post" class="pull-right">
 						<input type="text" name="email" id="email" placeholder="Email" class="input-small">

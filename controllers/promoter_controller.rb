@@ -40,6 +40,15 @@ get '/promoter/profile' do
   erb :'/promoter/profile'
 end
 
+get '/promoter/edit' do
+  login_required
+  @title = "Edit your profile"
+  @pageTitle = promoter_name
+  @subTitle = "Edit your profile"
+  @promoter = Promoter.find(session[:promoter])
+  erb :'/promoter/edit'
+end
+
 get '/promoter/:id' do
   @promoter = Promoter.find(params[:id])
   @title = @promoter.name

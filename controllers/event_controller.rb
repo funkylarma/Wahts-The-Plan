@@ -30,6 +30,6 @@ get '/event/:id' do
   @event = Event.find(params[:id])
   @promoter = Promoter.find(@event.promoterId)
   @pageTitle = @event.title
-  @subTitle = "@ #{@promoter.name}"
+  @subTitle = "@ #{@event.venue}"
   erb :'/events/detail'
 end

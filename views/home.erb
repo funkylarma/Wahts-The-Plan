@@ -6,6 +6,8 @@
 		<li><a href="/event/<%= event.id %>"><%= event.title %></a></li>
 	<% end %>
 	</ul>
+<% else %>
+	<p>There are no recent events</p>
 <% end %>
 
 <% content_for :sidebar do %>
