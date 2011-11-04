@@ -49,14 +49,21 @@
 	</div>
 	
 	<div class="clearfix">
-		<label for="event_address">Location</label>
+		<label for="postcode">Building Name</label>
 		<div class="input">
-			<input type="text" name="address" id="event_address">
+			<input type="text" name="promoter[building]" id="building">
 		</div>
+		<label for="postcode">Postcode</label>
+		<div class="input">
+			<input type="text" name="promoter[address]" id="postcode">
+		</div>		
 	</div>
+	
+	<input type="hidden" id="promoter_address" >
 	
 	<div class="input">
 		<input type="submit" value="Submit Event" class="btn primary">
 	</div>
+	
 	
 </form>

@@ -18,7 +18,7 @@ use Rack::Flash
 #Site constants
 EMAIL_REGEXP = /(\A(\s*)\Z)|(\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z)/i
 CATEGORIES = {:all => "Type (all)", :concert => "Concert", :festival => "Festival", :live_music => "Live Music", :night_club => "Night Club", :pub => "Pub" }
-DISTANCE = {5 => "Within 5 miles", 10 => "Upto 10 miles", 20 => "Upto 20 miles", 40 => "Upto 40 miles", 60 => "Over 40 miles"}
+DISTANCE = {5 => "Within 5 miles", 10 => "Upto 10 miles", 20 => "Upto 20 miles", 40 => "Upto 40 miles"}
 
 #Require helpers
 require_relative 'helpers'

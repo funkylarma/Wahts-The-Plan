@@ -4,11 +4,15 @@
 
 <div >
 	<ul class="tabs" data-tabs="tabs"> 		
-		<li class="active"><a href="#list">View As List</a></li>
-		<li><a href="#map">View As Map</a></li>		
+		<li class="active"><a href="#map">View As Map</a></li>	
+		<li><a href="#list">View As List</a></li>			
 	</ul>	
 	<div id="my-tab-content" class="tab-content">
-		<div id="list" class="active">
+			
+		<div id="map" class="active">
+		    <!-- Create map here -->	    
+		</div>
+		<div id="list" >
 			<div class="search">
 	            	<select class="orderBy">
 	            		<option value="">Order By...</option>
@@ -16,21 +20,21 @@
 	            		<option value="Date">Date</option>
 	            		<option value="Alpha">A - Z</option>
 	            	</select>
+	            	
 	        </div>   
 	                		
 			<ul>
-				<% @events.each do | event | %>
+				<% @locations.each do | event | %>
 				<li>
 					<a href="/event/<%= event.id %>"><%= event.title %></a>
 					<p><%= event.description %></p>
+					<p><%= ((getDistance(@location.lat.to_f, @location.lng.to_f, event.location[1], event.location[0])/1000) *  0.621371192).round(0) %>
+					Miles from <%= @search[:postcode]%></o>
 				</li>
 				<% end %>	
 			</ul>
 		</div>
-			
-		<div id="map">
-		    <!-- Create map here -->	    
-		</div>
+		
 	</div>
 </div>
 
@@ -87,8 +91,10 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="../../js/Fluster2.js"></script>
 <script type="text/javascript" src="../../js/bootstrap.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
 <!--google maps script-->
-<script type="text/javascript">       
+<script type="text/javascript">  
+
     var postCode = '<%= @search[:postcode].to_s %>';
 
     var radius = '<%= @search[:radius].to_s %>';
@@ -101,7 +107,16 @@
   			e.target// activated tab
   			e.relatedTarget // previous tab
   		});
-        geocodePostcode(postCode);   
+        geocodePostcode(postCode);
+        
+        var input = document.getElementById('location');
+        var defaultBounds = new google.maps.LatLngBounds(
+  			new google.maps.LatLng(50.092393,-12.480469),
+  			new google.maps.LatLng(59.063154,2.658691));
+        var options = {
+  		bounds: defaultBounds
+		};
+        var autocomplete = new google.maps.places.Autocomplete(input, options);   
     });
     
     function geocodePostcode(postcode) {
@@ -125,42 +140,33 @@
                 //lots of Test data
                 var json = [];
                 
-                <% @locations.each_with_index do |key, i|  %>
+                <% @locations.each_with_index do |event, i|  %>
                 	
-				json[<%= i%>] = { 'id': '<%= key[0] %> ', 'lng': '<%= key[1][0]%>', 'lat': '<%= key[1][1] %>'}
-					
-                	
+					json[<%= i%>] = { 'id': '<%= event.id %> ', 'lng': '<%= event.location[0]%>', 'lat': '<%= event.location[1] %>', 'desc' : '<%= event.description%>', 'title' : '<%= event.title%>'}
                 <% end %>
-                //var json = %= @jsonString%>
+                
                
                 for (var i = 0; i < json.length; i++) {
-                    marker = newMarker(new google.maps.LatLng(json[i].lat, json[i].lng), json[i].id);
+                							 	  //location -->						 <!--ID--> <!--title--> <!--Description-->
+                    marker = newMarker(new google.maps.LatLng(json[i].lat, json[i].lng), json[i].id, json[i].title, json[i].desc);
                     markerset.push(marker);
                 }
-                //for (var i = 0; i < json.length; i++) {
-                    //marker = newMarker(new google.maps.LatLng(json[i].lat, json[i].lng), json[i].id);
-                    //markerset.push(marker);
-                //}
+                
                 
                 var fluster = new MarkerClusterer(map, markerset);
-                //for (var i = 0; i < Model.Count ; i++) {                // 
-                // <text>
-                // marker = newMarker(new google.maps.LatLng(Model[i].LatLang), "Model[i].EventTitle");
-                // fluster.addMarker(marker);
-                // </text>       
-                // }
-                function newMarker(markerLocation, markerTitle) {
-                    var marker = new google.maps.Marker({ position: markerLocation, title: 'Marker[' + markerTitle + ']' });
-                    var contentString = '<p>Marker[' + markerTitle + '] clicked.</p>'
+
+                function newMarker(markerLocation, Id, markerTitle, markerDescription) {
+                	var image = '../../img/info.png';
+                    var marker = new google.maps.Marker({icon: image, position: markerLocation, title: markerTitle });
+                    var contentString = '<div id="' + Id + '"><a href="/event/' + Id + '" title="' + markerTitle + '">'+ markerTitle + '</a> <br>'+markerDescription+'</div>';
+                    
                     var infowindow = new google.maps.InfoWindow({ content: contentString });
                     google.maps.event.addListener(marker, 'click', function () {
                         infowindow.open(map, marker);
                     });
                     return marker;
                 }
-                //Add info to position
-
-
+                
                 //Radius
                 var radiusInMeters = radius * 1609.344;
                 var radiusCircle;
@@ -182,4 +188,7 @@
         });
     }
 </script>  
+<script>
+	
+</script>
 <% end %>

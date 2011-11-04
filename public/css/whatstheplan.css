@@ -930,6 +930,7 @@ input[disabled],select[disabled],textarea[disabled],input[readonly],select[reado
 	float: right;
 }
 
+<<<<<<< HEAD
 .actions .secondary-action a {
 	line-height: 30px;
 }
@@ -937,6 +938,13 @@ input[disabled],select[disabled],textarea[disabled],input[readonly],select[reado
 .actions .secondary-action a:hover {
 	text-decoration: underline;
 }
+=======
+code{
+	background-color:#fee9cc;
+	color:rgba(0, 0, 0, 0.75);
+	padding:1px 3px;
+}	
+>>>>>>> 96c867b921fbcf5b03355883722ff03fd0bac4b4
 
 .help-inline,.help-block {
 	font-size: 11px;
@@ -2601,14 +2609,4 @@ negative indent the amount of the padding to maintain the grid system */
 .searching {
 	list-style: none;
 	display: inline;
-}
-
-@media all and (max-width: 860px) {
-
-.span4 {
-	margin: 0;
-	float: inherit;
-	border: none;
-}
-
 }

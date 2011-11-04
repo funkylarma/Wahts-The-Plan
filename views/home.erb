@@ -85,12 +85,23 @@
 <% content_for :js_footer do%>
 <script src="../../js/init.js"></script>
 <script src="../../js/geo.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
+
 <script type="text/javascript">  
 	$(document).ready(function(){
 		$("#btnLoc").click(function() {
 			initiate_geolocation();
 			return false;
 		});
+		
+        var input = document.getElementById('location');
+        var defaultBounds = new google.maps.LatLngBounds(
+  			new google.maps.LatLng(50.092393,-12.480469),
+  			new google.maps.LatLng(59.063154,2.658691));
+        var options = {
+  		bounds: defaultBounds
+		};
+        var autocomplete = new google.maps.places.Autocomplete(input, options);   
 	});	
 	
         

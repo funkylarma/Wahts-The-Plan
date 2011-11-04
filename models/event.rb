@@ -11,6 +11,6 @@ class Event
   key :category, String
   timestamps!
   
-  ensure_index [[:location, '2d']]
+  ensure_index [[:location, "2d"]]
   
 end
