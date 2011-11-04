@@ -195,7 +195,7 @@ ClusterIcon.prototype.show = function () {
         this.div_.style.cssText = this.createCss(pos);
         if (this.cluster_.printable_) {
             // (Would like to use "width: inherit;" below, but doesn't work with MSIE)
-            this.div_.innerHTML = "<img src='" + this.url_ + "'><div style='position: absolute; top: 0px; left: 0px; width: " + this.width_ + "px;'>" + this.sums_.text + "</div>";
+            this.div_.innerHTML = "<img src='../../img/info.png'><div style='position: absolute; top: 0px; left: 0px; width: " + this.width_ + "px;'>" + this.sums_.text + "</div>";
         } else {
             this.div_.innerHTML = this.sums_.text;
         }
@@ -736,7 +736,7 @@ MarkerClusterer.prototype.setupStyles_ = function () {
     for (i = 0; i < this.imageSizes_.length; i++) {
         size = this.imageSizes_[i];
         this.styles_.push({
-            url: this.imagePath_ + (i + 1) + "." + this.imageExtension_,
+            url: '../../img/info.png',
             height: size,
             width: size
         });
@@ -1506,7 +1506,7 @@ MarkerClusterer.BATCH_SIZE_IE = 500;
 * @type {string}
 * @constant
 */
-MarkerClusterer.IMAGE_PATH = "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m";
+MarkerClusterer.IMAGE_PATH = "../img/info.png";
 
 
 /**
@@ -1524,4 +1524,4 @@ MarkerClusterer.IMAGE_EXTENSION = "png";
 * @type {Array.<number>}
 * @constant
 */
-MarkerClusterer.IMAGE_SIZES = [53, 56, 66, 78, 90];
+MarkerClusterer.IMAGE_SIZES = [30,30,30,30,30];

@@ -30,7 +30,7 @@ get '/event/results/*' do
   
   @locations = Event.where(:location => { '$within' => { '$center' => [latlng, deg2rad(params[:radius])]}})
     
-  erb :'events/results' 
+  erb :'/events/results' 
 end
 
 get '/event/create' do
