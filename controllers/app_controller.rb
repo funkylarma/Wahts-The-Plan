@@ -19,3 +19,9 @@ get '/logout' do
   flash[:confirm] = "Logged out"
   redirect '/'
 end
+
+get '/subscribe' do  
+   @title = "Subscibe"
+  @pageTitle = "Subscribe"
+  erb :subscribe
+end

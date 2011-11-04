@@ -30,11 +30,16 @@
 					<a href="/">Whats the plan</a>
 				</h3>
 				<ul class="nav">
-					<li><a href="/event">View Events</a></li>
-					<li><a href="/promoter">Visit Promoters</a></li>
+					<% if logged_in? %>
+					<li><a href="/event/myevents">My Events</a></li>
+					<% else %>
+					<li><a href="/promoter/register-step1">Register</a></li>
+					<li><a href="/subscribe">Subscribe To Newsletter</a></li>
+					<% end %>
 				</ul>
 				<% if logged_in? %>
-					<p class="pull-right">Logged in as <a href="/promoter/profile" title="Your profile"><%= promoter_name %></a></p>
+					<p class="pull-right">Logged in as <a href="/promoter/profile" title="Your profile"><%= promoter_name %>  </a><a href="/logout" title="Log out" class="btn">Logout</a></p>
+					
 				<% else %>
 					<form action="/promoter/login" method="post" class="pull-right">
 						<input type="text" name="email" id="email" placeholder="Email" class="input-small">

@@ -1,4 +1,3 @@
-
 get '/promoter' do
   @title = "Find event promoters"
   @pageTitle = "Find event promoters"
@@ -6,15 +5,34 @@ get '/promoter' do
   erb :'/promoter/index'
 end
 
-get '/promoter/create' do
-  erb :'/promoter/create'
+get '/promoter/register-step1' do  
+  
+  erb :'/promoter/register-step1'
 end
 
-post '/promoter/create' do
+get '/promoter/register-step2/:level' do  
+  @level = params[:level]
+  if @level == "gold"
+    @price = 149
+  else 
+    if @level == "silver"
+      @price = 99
+    else 
+      @price= 49
+    end
+  end
+  erb :'/promoter/register-step2'
+end
+
+post '/promoter/register-step2' do  
+  
+  erb :'/promoter/register-step3'
+end
+post '/promoter/register-step3' do
   promoter = Promoter.create(params[:promoter])
   if promoter.save
     flash[:confirm] = "Account created"
-    redirect '/'
+    redirect '/event/myevents'
   else
     flash[:error] = "Error!"
     redirect '/'
@@ -53,5 +71,6 @@ get '/promoter/:id' do
   @promoter = Promoter.find(params[:id])
   @title = @promoter.name
   @pageTitle = @promoter.name
+  @events = Event.where(:promoterId.to_s => @promoter.id.to_s)
   erb :'/promoter/detail'
 end

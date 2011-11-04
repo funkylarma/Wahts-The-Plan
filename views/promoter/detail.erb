@@ -1,0 +1,4 @@
+<h2>Events for this Promoter</h2>
+<% @events.each do | event | %>
+		<li><a href="/event/<%= event.id %>" title="<%= event.title %>"><%= event.title %></a></li>
+<% end %>

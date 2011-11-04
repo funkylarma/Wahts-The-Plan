@@ -16,13 +16,16 @@
 	            		<option value="Date">Date</option>
 	            		<option value="Alpha">A - Z</option>
 	            	</select>
+	            	
 	        </div>   
 	                		
 			<ul>
-				<% @events.each do | event | %>
+				<% @locations.each do | event | %>
 				<li>
 					<a href="/event/<%= event.id %>"><%= event.title %></a>
 					<p><%= event.description %></p>
+					<p><%= ((getDistance(@location.lat.to_f, @location.lng.to_f, event.location[1], event.location[0])/1000) *  0.621371192).round(0) %>
+					Miles from <%= @search[:postcode]%></o>
 				</li>
 				<% end %>	
 			</ul>
@@ -88,7 +91,8 @@
 <script type="text/javascript" src="../../js/Fluster2.js"></script>
 <script type="text/javascript" src="../../js/bootstrap.js"></script>
 <!--google maps script-->
-<script type="text/javascript">       
+<script type="text/javascript">  
+
     var postCode = '<%= @search[:postcode].to_s %>';
 
     var radius = '<%= @search[:radius].to_s %>';
@@ -125,10 +129,9 @@
                 //lots of Test data
                 var json = [];
                 
-                <% @locations.each_with_index do |key, i|  %>
+                <% @locations.each_with_index do |event, i|  %>
                 	
-				json[<%= i%>] = { 'id': '<%= key[0] %> ', 'lng': '<%= key[1][0]%>', 'lat': '<%= key[1][1] %>'}
-					
+					json[<%= i%>] = { 'id': '<%= event.id %> ', 'lng': '<%= event.location[0]%>', 'lat': '<%= event.location[1] %>'}
                 	
                 <% end %>
                 //var json = %= @jsonString%>

@@ -4,7 +4,7 @@
 
 <% content_for :sidebar do %>
     <h3>Event Details</h3>
-    <p>Insert some details about <%= @promoter.name %> and the <%= @event.title %> in here</p>
+    <p>Insert some details about <a href="/promoter/<%= @promoter.id %>" title="<%= @promoter.name %>"><%= @promoter.name %></a> and the <%= @event.title %> in here</p>
     <p>Description:</p>
     <p><%= @event.description %> </p>
 <% end %>

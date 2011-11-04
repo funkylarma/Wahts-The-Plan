@@ -1,3 +1,11 @@
+get '/event/myevents' do
+  login_required
+  @title = "My Events"
+  @pageTitle = "My Events"
+  @events = Event.where(:promoterId.to_s => current_user.id.to_s)  
+  
+  erb :'/events/myevents'
+end
 
 get '/event' do
   @title = "Find events"
@@ -14,22 +22,14 @@ get '/event/results/*' do
     :beforeDate => params[:beforeDate],
     :radius => params[:radius]
   }
-  location = geocode(params[:postcode])
-  latlng = Array[location.lng.to_f, location.lat.to_f]
-  @events = Event.all  
-  @locations = Hash.new
-
-  @events.each do |event|    
-                                                                           #latitude         #longtitude
-     distanceInMiles = ((getDistance(location.lat.to_f,location.lng.to_f,event.location[1],event.location[0])) / 1000 ) * 0.621371192
-     if distanceInMiles.to_f <= params[:radius].to_f     
-                          #latitude         #longtitude
-       latlngArr = Array[event.location[1], event.location[0]]
-       @locations[event.id.to_s] = latlngArr
-     end
-  end
+  @location = geocode(params[:postcode])
+  latlng = Array[@location.lng.to_f, @location.lat.to_f]
   
+  #@locations = Event.all  
+  #@locations = Event.where(:location => {'$near' => [latlng[1], latlng[0]], '$maxDistance' => 0.01 })
   
+  @locations = Event.where(:location => { '$within' => { '$center' => [latlng, deg2rad(params[:radius])]}})
+    
   erb :'events/results' 
 end
 
@@ -44,8 +44,12 @@ post '/event/create' do
   login_required
   @event = Event.create(params[:event])
   @event.promoterId = current_user.id
-  location = geocode(params[:address])
+  location = geocode(params[:building] + params[:address] )
+  if location == nil
+    location = geocode(params[:address])
+  end
   @event.location = Array[location.lng.to_f, location.lat.to_f]
+ 
   if @event.save
     redirect '/'
   else

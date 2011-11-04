@@ -30,11 +30,17 @@ helpers do
   end
   
   def deg2rad(deg) 
-    return (deg * Math::PI / 180)
+    return (deg.to_f * Math::PI / 180)
   end
 
   def rad2deg(rad) 
-    return (rad / Math::PI * 180)
+    return (rad.to_f / Math::PI * 180)
+  end
+  
+  def miles2Degrees(miles)
+    earthsRadius = 6378 #km
+    km = miles.to_f * 1.609344
+    return ( km.to_f * earthsRadius.to_f )
   end
 
   def getDistance(lat1,lon1,lat2,lon2) 
