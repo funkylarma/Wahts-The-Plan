@@ -142,7 +142,7 @@
                 
                 <% @locations.each_with_index do |event, i|  %>
                 	
-					json[<%= i%>] = { 'id': '<%= event.id %> ', 'lng': '<%= event.location[0]%>', 'lat': '<%= event.location[1] %>', 'desc' : "<%= event.description%>", 'title' : "<%= event.title%>"}
+					json[<%= i%>] = { 'id': '<%= event.id %> ', 'lng': '<%= event.location[0]%>', 'lat': '<%= event.location[1] %>', 'desc' : escape('<%= event.description%>'), 'title' : escape('<%= event.title%>')}
                 <% end %>
                 
                
