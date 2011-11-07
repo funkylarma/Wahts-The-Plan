@@ -1,0 +1,72 @@
+<form action="/event/create" method="post">
+	
+	<div class="clearfix">
+		<label for="event_title">Event</label>
+		<div class="input">
+			<input type="text" name="event[title]" id="event_title" value="<%= @event.title %>">
+		</div>
+	</div>
+	
+	<div class="clearfix">
+		<label for="event_venue">Venue</label>
+		<div class="input">
+			<input type="text" name="event[venue]" id="event_venue" value="<%= @event.venue %>">
+		</div>
+	</div>
+	
+	<div class="clearfix">
+		<label for="event_date">Date</label>
+		<div class="input">
+			<input type="datetime" name="event[date]" id="event_date" value="<%= @event.date %>">
+		</div>
+	</div>
+	
+	<div class="clearfix">
+		<label for="event_desc">Description</label>
+		<div class="input">
+			<textarea name="event[description]" id="event_desc" ><%= @event.description %></textarea>
+		</div>
+	</div>
+	
+	<div class="clearfix">
+		<label for="event_category">Category</label>
+		<div class="input">
+			
+			
+			<select name="event[category]" id="event_category">
+                <% CATEGORIES.each do |key, value| %>
+                    <option value="<%= key %>"
+                        <% if @event.category == key.to_s %>
+                            selected="selected"
+                        <% end %>
+                    ><%= value %></option>
+                <% end %>
+            </select>
+		</div>
+	</div>
+	
+	<div class="clearfix">
+		<label for="event_url">Event web page</label>
+		<div class="input">
+			<input type="url" name="event[url]" id="event_url" value="<%= @event.url %>">
+		</div>
+	</div>
+	
+	<div class="clearfix">
+		<label for="postcode">Building Name</label>
+		<div class="input">
+			<input type="text" name="building" id="event_building">
+		</div>
+		<label for="postcode">Postcode</label>
+		<div class="input">
+			<input type="text" name="address" id="event_address" value="<%= @location %>">
+		</div>		
+	</div>
+	<input type="hidden" value= <%= @event.id %>>
+	
+	<div class="input">
+		<input type="submit" value="Submit Event" class="btn primary">
+	</div>
+	
+	
+</form>

@@ -1,5 +1,4 @@
 #helper methods
-
 helpers do
   
   #Any includes
@@ -17,8 +16,11 @@ helpers do
       '/'
     else
       url
+      
     end
   end
+  
+  
   
   #Event Helper Methods
   def geocode(address)
@@ -50,6 +52,10 @@ helpers do
       return (rounded).abs    
   end
   
+  def removeEvent(id)
+    event = Event.find(id)
+    event.destroy
+  end
   #Promoter Helper methods
   def login_required
     if session[:promoter]

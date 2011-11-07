@@ -10,6 +10,7 @@ class Promoter
   key :tel, String
   key :hashed_password, String
   key :salt, String
+  #key :membershipLevel, Int, :required => true
   
   validates_presence_of :password, :if => :password_required?
   validates_confirmation_of :password, :if => :password_required?

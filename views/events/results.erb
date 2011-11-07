@@ -141,8 +141,8 @@
                 var json = [];
                 
                 <% @locations.each_with_index do |event, i|  %>
-                	var description = htmlEncode('<%= event.description%>');
-                	var title = htmlEncode('<%= event.title%>');
+                	var description = htmlEncode("<%= event.description%>");
+                	var title = htmlEncode("<%= event.title%>");
 					json[<%= i%>] = { 'id': '<%= event.id %> ', 'lng': '<%= event.location[0]%>', 'lat': '<%= event.location[1] %>', 'desc' : description, 'title' : title}
                 <% end %>
                 

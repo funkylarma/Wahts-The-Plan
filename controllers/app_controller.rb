@@ -25,3 +25,9 @@ get '/subscribe' do
   @pageTitle = "Subscribe"
   erb :subscribe
 end
+
+get '/accessDenied' do
+  @title = "Access Denied"
+  @pageTitle = "Access Denied"
+  erb :accessdenied
+end
