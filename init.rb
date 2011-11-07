@@ -1,5 +1,5 @@
 #Require gems
-%w[sinatra json mongo_mapper rack-flash geokit aws/s3].each { |gem| require gem }
+%w[sinatra json mongo_mapper rack-flash geokit aws-s3].each { |gem| require gem }
 
 #Setup the database connections
 if ENV['MONGOLAB_URI']
