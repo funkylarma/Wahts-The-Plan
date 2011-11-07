@@ -6,7 +6,7 @@ gem 'bson_ext'
 gem 'rack-flash'
 gem 'geokit'
 require 'fileutils'
-require 'aws-s3'
+#require 'aws-s3'
 
 
 ACCESS_KEY_ID = "AKIAJRAG6DS75CQOXWEQ"
