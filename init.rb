@@ -37,3 +37,8 @@ end
 %w[app promoter event].each do |controller|
   require File.join(File.dirname(__FILE__), "controllers", controller + "_controller")
 end
+
+AWS::S3::Base.establish_connection!(
+    :access_key_id     => 'AKIAJRAG6DS75CQOXWEQ',
+    :secret_access_key => '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'
+  )

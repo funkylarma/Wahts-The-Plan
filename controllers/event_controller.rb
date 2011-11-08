@@ -44,23 +44,83 @@ post '/event/create' do
   login_required
   @event = Event.create(params[:event])
   @event.promoterId = current_user.id
-  location = geocode(params[:building] + params[:address] )
-  if location == nil
+  if params[:building] == nil
     location = geocode(params[:address])
+  else
+  location = geocode(params[:building] + params[:address] ) 
   end
-  @event.location = Array[location.lng.to_f, location.lat.to_f]
- 
+  @event.location = Array[location.lng.to_f, location.lat.to_f] 
   if @event.save
     redirect '/'
   else
     redirect '/event/create'
   end
+  
+end
+
+get '/event/delete/:id' do
+  event = Event.find(params[:id])
+  if event.promoterId.to_s == current_user.id.to_s
+    event.destroy
+  end
+  
+  redirect '/event/myevents'
+end
+
+get '/event/edit/:id' do
+  @event = Event.find(params[:id])
+  @promoter = Promoter.find(current_user.id) 
+  if @event.promoterId.to_s == current_user.id.to_s
+    erb :'/accessdenied'
+  end
+  @location = reverse_geocode(@event.location[1], @event.location[0])
+  @pageTitle = "Editing " + @event.title
+  @subTitle = "@ #{@event.venue}"
+  erb :'/events/edit'
+end
+
+post '/event/edit/:id' do
+  login_required
+  @event = Event.find(params[:id]) 
+  @event.title = params[:title]
+  @event.description = params[:description]
+  @event.date = params[:date]
+  @event.url = params[:url]
+  @event.venue = params[:venue]-
+  @event.category = params[:category] 
+  if params[:building] == nil
+    @event.location = geocode(params[:address])
+  else
+  @event.location = geocode(params[:building] + params[:address] ) 
+  end
+  @event.location = Array[location.lng.to_f, location.lat.to_f]
+  @event.save  
+end
+
+get '/upload' do
+  erb :'/upload'  
+end
+
+post '/upload' do
+  service = Service.buckets
+  bucket = Bucket.find('WhatsThePlan')
+  file = params[:filename]
+  id = S3Object.store(file, open(file), 'whatstheplan')
 end
 
 get '/event/:id' do
   @event = Event.find(params[:id])
   @promoter = Promoter.find(@event.promoterId)
+  @isOwner = false
+  if logged_in?
+    if @event.promoterId.to_s == current_user.id.to_s
+      @isOwner = true
+    end
+  end  
   @pageTitle = @event.title
   @subTitle = "@ #{@event.venue}"
   erb :'/events/detail'
 end
+
+
+
